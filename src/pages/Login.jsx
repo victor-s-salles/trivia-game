@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React from 'react';
 import { connect } from 'react-redux';
 import '../App.css';
@@ -31,7 +32,7 @@ class Login extends React.Component {
     const data = await response.json();
     const tokenOfPlayer = data.token;
 
-    localStorage.setItem('token',tokenOfPlayer);
+    localStorage.setItem('token', tokenOfPlayer);
     history.push('/game');
   };
 
@@ -73,5 +74,11 @@ class Login extends React.Component {
       </div>
     );
   }
+}
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired
 }
 export default connect()(Login);
