@@ -1,16 +1,16 @@
 body {
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
-  box-sizing: border-box;
   margin: 20vmin;
   padding: 0;
 }
 
 .login {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 200px;
 
 }
