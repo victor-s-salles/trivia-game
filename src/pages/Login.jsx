@@ -14,8 +14,6 @@ class Login extends React.Component {
 
   onInputChange = ({ target: { value, name } }) => {
     this.setState({ [name]: value }, this.verifyField);
-    const hash = md5('email');
-    console.log(hash);
   };
 
   verifyField = () => {
