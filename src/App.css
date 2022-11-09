@@ -1,7 +1,18 @@
 body {
+  display: flex;
+  justify-content: center;
   box-sizing: border-box;
-  margin: 0;
+  margin: 20vmin;
   padding: 0;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid black;
+  width: 200px;
+
 }
 
 .App {
