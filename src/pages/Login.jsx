@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import '../App.css';
@@ -79,6 +79,6 @@ class Login extends React.Component {
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
-  }).isRequired
-}
+  }).isRequired,
+};
 export default connect()(Login);
