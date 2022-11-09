@@ -32,7 +32,7 @@ class Login extends React.Component {
     return (
       <div className="login">
         <label htmlFor="name">
-          Nome:
+          Nome
           <input
             id="name"
             name="name"
@@ -43,7 +43,7 @@ class Login extends React.Component {
           />
         </label>
         <label htmlFor="email">
-          Email:
+          Email
           <input
             id="email"
             name="email"
