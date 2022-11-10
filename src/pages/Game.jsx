@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import requestQuestions from '../utils/getQuestions';
+import Header from '../components/Header';
 // import Loading from '../Components/Loading';
 
 class Game extends React.Component {
@@ -82,6 +83,7 @@ class Game extends React.Component {
     if (allQuestions[actualQuestion].type === 'multiple') {
       return (
         <div>
+          <Header />
           <h2 data-testid="question-category">
             {`Categoria: ${allQuestions[actualQuestion].category}`}
           </h2>
