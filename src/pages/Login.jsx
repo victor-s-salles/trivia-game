@@ -26,16 +26,15 @@ class Login extends React.Component {
     this.setState({ isDisabled: !(verifyEmail && verifyName) });
   };
 
-  getTokenForPlayer = async () => {
-    const { history } = this.props;
-    const response = await fetch('https://opentdb.com/api_token.php?command=request');
-    const data = await response.json();
-    const tokenOfPlayer = data.token;
+  // getTokenForPlayer = async () => {
+  //   const { history } = this.props;
+  //   const response = await fetch('https://opentdb.com/api_token.php?command=request');
+  //   const data = await response.json();
+  //   const tokenOfPlayer = data.token;
 
-    localStorage.setItem('token', tokenOfPlayer);
-    history.push('/game');
-  };
-  
+  //   localStorage.setItem('token', tokenOfPlayer);
+  //   history.push('/game');
+  // };
   render() {
     const { name, email, isDisabled } = this.state;
     return (
