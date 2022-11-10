@@ -77,13 +77,14 @@ class Game extends React.Component {
 
   render() {
     const { isLoading, allQuestions, actualQuestion, allAnswers } = this.state;
+    const { history } = this.props;
     if (isLoading) {
       return <div><h1>Carregando...</h1></div>;
     }
     if (allQuestions[actualQuestion].type === 'multiple') {
       return (
         <div>
-          <Header />
+          <Header history={ history } />
           <h2 data-testid="question-category">
             {`Categoria: ${allQuestions[actualQuestion].category}`}
           </h2>
