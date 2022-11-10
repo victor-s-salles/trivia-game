@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import '../App.css';
 import BtnSettings from '../components/BtnSettings';
+import gravatar from '../utils/gravatar';
+import { createUser } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -11,8 +13,13 @@ class Login extends React.Component {
       name: '',
       email: '',
       isDisabled: true,
+      gravatarData: '',
     };
   }
+
+  // gravatarData = {
+  //   const img = gravatar()
+  // }
 
   onInputChange = ({ target: { value, name } }) => {
     this.setState({ [name]: value }, this.verifyField);
@@ -28,12 +35,14 @@ class Login extends React.Component {
   };
 
   getTokenForPlayer = async () => {
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
+    const { email, name } = this.state;
     const response = await fetch('https://opentdb.com/api_token.php?command=request');
     const data = await response.json();
     const tokenOfPlayer = data.token;
 
     localStorage.setItem('token', tokenOfPlayer);
+    dispatch(createUser({ name, email }));
     history.push('/game');
   };
 
@@ -82,5 +91,6 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 export default connect()(Login);

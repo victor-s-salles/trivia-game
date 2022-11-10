@@ -1,6 +1,6 @@
 export const CREATE_USER = 'CREATE_USER';
 
-export const createUser = (email) => ({
+export const createUser = (payload) => ({
   type: CREATE_USER,
-  email,
+  payload,
 });

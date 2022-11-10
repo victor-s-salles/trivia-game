@@ -65,7 +65,6 @@ class Game extends React.Component {
 
     const allAnswr = [correctAnswerBTN, ...wrongAnswersBTN];
 
-    // const allAnswr = [correctAnswer, ...wrongAnswers];
     const shuffled = allAnswr.map((value) => ({ value, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ value }) => value);
