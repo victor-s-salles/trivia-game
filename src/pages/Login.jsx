@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import '../App.css';
@@ -25,6 +26,16 @@ class Login extends React.Component {
     this.setState({ isDisabled: !(verifyEmail && verifyName) });
   };
 
+  getTokenForPlayer = async () => {
+    const { history } = this.props;
+    const response = await fetch('https://opentdb.com/api_token.php?command=request');
+    const data = await response.json();
+    const tokenOfPlayer = data.token;
+
+    localStorage.setItem('token', tokenOfPlayer);
+    history.push('/game');
+  };
+  
   render() {
     const { name, email, isDisabled } = this.state;
     return (
@@ -62,4 +73,10 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 export default connect()(Login);
