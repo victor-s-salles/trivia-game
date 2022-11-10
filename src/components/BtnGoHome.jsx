@@ -17,7 +17,7 @@ class BtnGoHome extends Component {
     return (
       <button
         type="button"
-        data-testid="btn-settings"
+        data-testid="btn-go-home"
         onClick={ this.handleClick }
       >
         Go Home!
