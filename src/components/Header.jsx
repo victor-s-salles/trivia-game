@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import BtnGoHome from './BtnGoHome';
-import BtnSettings from './BtnSettings';
 
 class Header extends React.Component {
   render() {
@@ -25,7 +24,6 @@ class Header extends React.Component {
           Score:
           {score}
         </h4>
-        <BtnSettings history={ history } />
         <BtnGoHome history={ history } />
       </div>
     );

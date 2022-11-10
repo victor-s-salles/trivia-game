@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import '../App.css';
+import BtnSettings from '../components/BtnSettings';
 
 class Login extends React.Component {
   constructor() {
@@ -38,6 +39,7 @@ class Login extends React.Component {
 
   render() {
     const { name, email, isDisabled } = this.state;
+    const { history } = this.props;
     return (
       <div className="login">
         <label htmlFor="name">
@@ -70,6 +72,7 @@ class Login extends React.Component {
           Play
 
         </button>
+        <BtnSettings history={ history } />
       </div>
     );
   }
