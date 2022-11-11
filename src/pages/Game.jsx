@@ -5,7 +5,6 @@ import requestQuestions from '../utils/getQuestions';
 import Header from '../components/Header';
 import { timerOutFalse } from '../redux/actions';
 import Timer from '../components/Timer';
-// import Loading from '../Components/Loading';
 
 class Game extends React.Component {
   state = {
