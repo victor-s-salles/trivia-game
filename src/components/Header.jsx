@@ -20,7 +20,6 @@ class Header extends React.Component {
     const { name, score, image, history } = this.props;
     return (
       <div>
-        {/* <h1>Header</h1> */}
         <img
           src={ image }
           alt="Imagem de perfil do usuário "
