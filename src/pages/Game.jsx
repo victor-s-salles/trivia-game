@@ -162,8 +162,9 @@ class Game extends React.Component {
           </h2>
           <div
             data-testid="answer-options"
-          />
-          {allAnswers.map((answer) => (answer))}
+          >
+            {allAnswers.map((answer) => (answer))}
+          </div>
         </div>
       );
     }
