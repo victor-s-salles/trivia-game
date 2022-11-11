@@ -2,6 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import '../App.css';
+import BtnSettings from '../components/BtnSettings';
+
+import { createUser } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -12,6 +15,10 @@ class Login extends React.Component {
       isDisabled: true,
     };
   }
+
+  // gravatarData = {
+  //   const img = gravatar()
+  // }
 
   onInputChange = ({ target: { value, name } }) => {
     this.setState({ [name]: value }, this.verifyField);
@@ -26,21 +33,25 @@ class Login extends React.Component {
     this.setState({ isDisabled: !(verifyEmail && verifyName) });
   };
 
-  // getTokenForPlayer = async () => {
-  //   const { history } = this.props;
-  //   const response = await fetch('https://opentdb.com/api_token.php?command=request');
-  //   const data = await response.json();
-  //   const tokenOfPlayer = data.token;
+  getTokenForPlayer = async () => {
+    const { history, dispatch } = this.props;
+    const { email, name } = this.state;
+    const response = await fetch('https://opentdb.com/api_token.php?command=request');
+    const data = await response.json();
+    const tokenOfPlayer = data.token;
 
-  //   localStorage.setItem('token', tokenOfPlayer);
-  //   history.push('/game');
-  // };
+    localStorage.setItem('token', tokenOfPlayer);
+    dispatch(createUser({ name, email }));
+    history.push('/game');
+  };
+
   render() {
     const { name, email, isDisabled } = this.state;
+    const { history } = this.props;
     return (
       <div className="login">
         <label htmlFor="name">
-          Nome
+          Nome:
           <input
             id="name"
             name="name"
@@ -51,7 +62,7 @@ class Login extends React.Component {
           />
         </label>
         <label htmlFor="email">
-          Email
+          Email:
           <input
             id="email"
             name="email"
@@ -64,10 +75,12 @@ class Login extends React.Component {
           type="button"
           data-testid="btn-play"
           disabled={ isDisabled }
+          onClick={ this.getTokenForPlayer }
         >
           Play
 
         </button>
+        <BtnSettings history={ history } />
       </div>
     );
   }
@@ -77,5 +90,6 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 export default connect()(Login);

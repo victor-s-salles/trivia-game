@@ -1,6 +1,10 @@
 export const CREATE_USER = 'CREATE_USER';
-
-export const createUser = (email) => ({
+export const SAVE_IMAGE = 'SAVE_IMAGE';
+export const createUser = (payload) => ({
   type: CREATE_USER,
-  email,
+  payload,
+});
+export const saveImage = (payload) => ({
+  type: SAVE_IMAGE,
+  payload,
 });

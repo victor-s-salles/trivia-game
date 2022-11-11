@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import requestQuestions from '../utils/getQuestions';
+import Header from '../components/Header';
 // import Loading from '../Components/Loading';
 
 class Game extends React.Component {
@@ -33,9 +34,53 @@ class Game extends React.Component {
         this.setState({ isLoading: false });
         if (allQuestions[actualQuestion].type === 'multiple') {
           this.randomizeQuestions();
+        } else {
+          this.trueOrFalseGenerator();
         }
       },
     );
+  };
+
+  shuffleArray = (arr) => {
+    // Loop em todos os elementos
+    for (let i = arr.length - 1; i > 0; i -= 1) {
+      // Escolhendo elemento aleatório
+      const j = Math.floor(Math.random() * (i + 1));
+      // Reposicionando elemento
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    // Retornando array com aleatoriedade
+    return arr;
+  };
+
+  trueOrFalseGenerator = () => {
+    const { allQuestions, actualQuestion } = this.state;
+    const trueBTN = (
+      <button
+        key="trueBTN"
+        data-testid={ allQuestions[actualQuestion].correct_answer === 'True'
+          ? 'correct-answer' : 'wrong-answer-0' }
+        type="button"
+      >
+        True
+
+      </button>
+    );
+    const falseBtn = (
+      <button
+        key="falseBTN"
+        type="button"
+        data-testid={ allQuestions[actualQuestion].correct_answer === 'False'
+          ? 'correct-answer' : 'wrong-answer-0' }
+      >
+        False
+
+      </button>
+    );
+
+    const Answers = [trueBTN, falseBtn];
+    const shuffled = this.shuffleArray(Answers);
+    this.setState({ allAnswers: shuffled });
   };
 
   randomizeQuestions = () => {
@@ -63,11 +108,10 @@ class Game extends React.Component {
       </button>));
 
     const allAnswr = [correctAnswerBTN, ...wrongAnswersBTN];
-
-    // const allAnswr = [correctAnswer, ...wrongAnswers];
-    const shuffled = allAnswr.map((value) => ({ value, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ value }) => value);
+    const shuffled = this.shuffleArray(allAnswr);
+    // const shuffled = allAnswr.map((value) => ({ value, sort: Math.random() }))
+    //   .sort((a, b) => a.sort - b.sort)
+    //   .map(({ value }) => value);
     this.setState({
       allAnswers: shuffled,
       // correctAnswer,
@@ -76,12 +120,14 @@ class Game extends React.Component {
 
   render() {
     const { isLoading, allQuestions, actualQuestion, allAnswers } = this.state;
+    const { history } = this.props;
     if (isLoading) {
       return <div><h1>Carregando...</h1></div>;
     }
     if (allQuestions[actualQuestion].type === 'multiple') {
       return (
         <div>
+          <Header history={ history } />
           <h2 data-testid="question-category">
             {`Categoria: ${allQuestions[actualQuestion].category}`}
           </h2>
@@ -105,6 +151,7 @@ class Game extends React.Component {
     if (allQuestions[actualQuestion].type === 'boolean') {
       return (
         <div>
+          <Header history={ history } />
           <h2 data-testid="question-category">
             {`Categoria: ${allQuestions[actualQuestion].category}`}
           </h2>
@@ -116,25 +163,8 @@ class Game extends React.Component {
           <div
             data-testid="answer-options"
           >
-            <button
-              data-testid={ allQuestions[actualQuestion].correct_answer === 'True'
-                ? 'correct-answer' : 'wrong-answer-0' }
-              type="button"
-            >
-              True
-
-            </button>
-            <button
-              type="button"
-              data-testid={ allQuestions[actualQuestion].correct_answer === 'False'
-                ? 'correct-answer' : 'wrong-answer-0' }
-
-            >
-              False
-
-            </button>
+            {allAnswers.map((answer) => (answer))}
           </div>
-
         </div>
       );
     }
