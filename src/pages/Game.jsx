@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import requestQuestions from '../utils/getQuestions';
 import Header from '../components/Header';
-// import Loading from '../Components/Loading';
+// import Loading from '../components/Loading';
 
 class Game extends React.Component {
   state = {
