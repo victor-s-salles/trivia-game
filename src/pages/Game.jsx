@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import requestQuestions from '../utils/getQuestions';
+import Timer from '../components/Timer';
 import Header from '../components/Header';
 import { timerOutFalse } from '../redux/actions';
-import Timer from '../components/Timer';
 // import Loading from '../Components/Loading';
 
 class Game extends React.Component {
@@ -83,7 +83,7 @@ class Game extends React.Component {
     return (
       <div>
         <Header history={ history } />
-        <Timer time={ 5 } />
+        <Timer time={ 30 } />
         <h2 data-testid="question-category">
           {`Categoria: ${allQuestions[actualQuestion].category}`}
         </h2>
