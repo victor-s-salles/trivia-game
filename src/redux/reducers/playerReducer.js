@@ -1,4 +1,4 @@
-import { CREATE_USER } from '../actions';
+import { CREATE_USER, SAVE_IMAGE } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -14,6 +14,10 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     ...state,
     gravatarEmail: action.payload.email,
     name: action.payload.name,
+  };
+  case SAVE_IMAGE: return {
+    ...state,
+    image: action.payload,
   };
   default:
     return state;

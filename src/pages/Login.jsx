@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import '../App.css';
 import BtnSettings from '../components/BtnSettings';
-import gravatar from '../utils/gravatar';
+
 import { createUser } from '../redux/actions';
 
 class Login extends React.Component {
@@ -13,7 +13,6 @@ class Login extends React.Component {
       name: '',
       email: '',
       isDisabled: true,
-      gravatarData: '',
     };
   }
 
