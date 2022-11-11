@@ -16,10 +16,6 @@ class Login extends React.Component {
     };
   }
 
-  // gravatarData = {
-  //   const img = gravatar()
-  // }
-
   onInputChange = ({ target: { value, name } }) => {
     this.setState({ [name]: value }, this.verifyField);
   };
