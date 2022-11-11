@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import '../App.css';
-import BtnSettings from '../Components/BtnSettings';
+import BtnSettings from '../components/BtnSettings';
 
 import { createUser } from '../redux/actions';
 

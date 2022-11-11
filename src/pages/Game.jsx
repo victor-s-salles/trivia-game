@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import requestQuestions from '../utils/getQuestions';
-import Header from '../Components/Header';
+import Header from '../components/Header';
 import { timerOutFalse } from '../redux/actions';
 import Timer from '../Components/Timer';
 // import Loading from '../Components/Loading';
