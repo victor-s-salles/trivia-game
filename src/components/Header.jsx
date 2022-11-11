@@ -10,9 +10,9 @@ class Header extends React.Component {
     this.gravatarData();
   }
 
-  gravatarData = async () => {
+  gravatarData = () => {
     const { email, dispatch } = this.props;
-    const img = await gravatar(email);
+    const img = gravatar(email);
     dispatch(saveImage(img));
   };
 
