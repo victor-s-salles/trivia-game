@@ -59,5 +59,8 @@ Timer.propTypes = {
   time: PropTypes.number.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
+const mapStateToProps = (globalState) => ({
+  timerOut: globalState.gameReducer.timerOut,
 
-export default connect()(Timer);
+});
+export default connect(mapStateToProps)(Timer);
