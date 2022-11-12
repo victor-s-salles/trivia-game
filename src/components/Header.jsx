@@ -50,9 +50,9 @@ Header.propTypes = {
 };
 
 const mapStateToProps = (globalState) => ({
-  name: globalState.playerReducer.name,
-  score: globalState.playerReducer.score,
-  image: globalState.playerReducer.image,
-  email: globalState.playerReducer.gravatarEmail,
+  name: globalState.player.name,
+  score: globalState.player.score,
+  image: globalState.player.image,
+  email: globalState.player.gravatarEmail,
 });
 export default connect(mapStateToProps)(Header);

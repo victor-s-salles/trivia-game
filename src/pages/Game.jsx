@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import requestQuestions from '../utils/getQuestions';
 import Header from '../components/Header';
-import { timerOutFalse } from '../redux/actions';
+import { scoreSum, timerOutFalse, timerOutTrue } from '../redux/actions';
 import Timer from '../components/Timer';
 
 class Game extends React.Component {
@@ -73,6 +73,36 @@ class Game extends React.Component {
     });
   };
 
+  checkAnswer = (answer) => {
+    const { dispatch } = this.props;
+    dispatch(timerOutTrue());
+    if (answer === true) {
+      const { allQuestions, actualQuestion } = this.state;
+      const { difficulty } = allQuestions[actualQuestion];
+      const { time } = this.props;
+      const baseScore = 10;
+      const hard = 3;
+      const medium = 2;
+      const easy = 1;
+
+      switch (difficulty) {
+      case 'hard': dispatch(scoreSum(baseScore + (hard * time)));
+
+        break;
+      case 'medium': dispatch(scoreSum(baseScore + (medium * time)));
+
+        break;
+      case 'easy': dispatch(scoreSum(baseScore + (easy * time)));
+
+        break;
+
+      default:
+        break;
+      }
+    }
+    console.log(answer);
+  };
+
   render() {
     const { isLoading, allQuestions, actualQuestion, allAnswers } = this.state;
     const { history, timerOut } = this.props;
@@ -101,6 +131,7 @@ class Game extends React.Component {
                 : `wrong-answer-${index}` }
               type="button"
               disabled={ timerOut }
+              onClick={ () => { this.checkAnswer(answerOBJ.correct); } }
             >
               {answerOBJ.question}
 
@@ -120,9 +151,12 @@ Game.propTypes = {
   }).isRequired,
   timerOut: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
+  time: PropTypes.number.isRequired,
+
 };
 const mapStateToProps = (globalState) => ({
   timerOut: globalState.gameReducer.timerOut,
+  time: globalState.gameReducer.time,
 
 });
 export default connect(mapStateToProps)(Game);

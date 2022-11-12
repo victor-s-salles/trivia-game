@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { timerOutFalse, timerOutTrue } from '../redux/actions';
+import { timerOutFalse, timerOutTrue, timerUpdate } from '../redux/actions';
 
 class Timer extends React.Component {
   constructor() {
@@ -29,11 +29,13 @@ class Timer extends React.Component {
   tick = () => {
     const { dispatch } = this.props;
     const { secondsLeft } = this.state;
+
     if (secondsLeft > 0) {
       this.setState((prevState) => ({
         secondsLeft: prevState.secondsLeft - 1,
       }));
     }
+    dispatch(timerUpdate(secondsLeft - 1));
     if (secondsLeft === 0) {
       console.log('Seu tempo acabou');
       clearInterval(this.timerID);

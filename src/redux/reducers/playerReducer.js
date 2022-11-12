@@ -1,4 +1,4 @@
-import { CREATE_USER, SAVE_IMAGE } from '../actions';
+import { CREATE_USER, SAVE_IMAGE, SCORE_SUM } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -18,6 +18,11 @@ const playerReducer = (state = INITIAL_STATE, action) => {
   case SAVE_IMAGE: return {
     ...state,
     image: action.payload,
+  };
+  case SCORE_SUM: return {
+    ...state,
+    score: state.score + action.score,
+    assertions: state.assertions + 1,
   };
   default:
     return state;

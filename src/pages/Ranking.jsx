@@ -61,7 +61,7 @@ Ranking.propTypes = {
   score: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = ({ playerReducer: { name, score, image } }) => ({
+const mapStateToProps = ({ player: { name, score, image } }) => ({
   name,
   score,
   image,
