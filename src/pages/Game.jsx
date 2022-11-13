@@ -12,7 +12,7 @@ class Game extends React.Component {
     actualQuestion: 0,
     isLoading: true,
     allAnswers: [],
-    timeResponse: 3,
+    timeResponse: 30,
     // correctAnswer: '',
     // correctAnswerIndex: 0,
   };
@@ -109,18 +109,19 @@ class Game extends React.Component {
 
   nextQuestion = () => {
     const { actualQuestion } = this.state;
-    const { dispatch } = this.props;
+    // const { dispatch } = this.props;
     const maxNumberQuestions = 4;
     if (actualQuestion < maxNumberQuestions) {
       this.setState((prev) => ({ actualQuestion: prev.actualQuestion + 1 }));
       this.randomizeQuestions();
-      this.setState({ timeResponse: 5 });
+      this.setState({ timeResponse: 5 }); // Pq não passar 30 segundos para o 'time' do global?
       // dispatch(timerOutFalse());
     }
   };
 
   render() {
-    const { isLoading, allQuestions, actualQuestion, allAnswers, timeResponse } = this.state;
+    const {
+      isLoading, allQuestions, actualQuestion, allAnswers, timeResponse } = this.state;
     const { history, timerOut } = this.props;
     if (isLoading) {
       return (
