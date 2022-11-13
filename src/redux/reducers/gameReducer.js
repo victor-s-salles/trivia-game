@@ -1,4 +1,4 @@
-import { TIMER_OUT_TRUE, TIMER_OUT_FALSE, TIMER_UPDATE } from '../actions';
+import { TIMER_OUT_TRUE, TIMER_OUT_FALSE, TIMER_UPDATE, TIME_MORE_30 } from '../actions';
 
 const INITIAL_STATE = {
   timerOut: false,
@@ -20,6 +20,10 @@ const gameReducer = (state = INITIAL_STATE, action) => {
   case TIMER_UPDATE: return {
     ...state,
     time: action.seg,
+  };
+  case TIME_MORE_30: return {
+    ...state,
+    time: action.time,
   };
   default:
     return state;
