@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BtnPlayAgain from '../components/BtnPlayAgain';
 import BtnRanking from '../components/BtnRanking';
+import Header from '../components/Header';
 
 class Feedback extends React.Component {
   render() {
@@ -11,6 +12,7 @@ class Feedback extends React.Component {
     if (assertions < THREE) {
       return (
         <div>
+          <Header />
           <h2 data-testid="feedback-text">Could be better...</h2>
           <p>
             Você acertou
@@ -32,6 +34,7 @@ class Feedback extends React.Component {
     if (assertions >= THREE) {
       return (
         <div>
+          <Header />
           <h2 data-testid="feedback-text">Well Done!</h2>
           <p>
             Você acertou
