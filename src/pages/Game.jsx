@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import requestQuestions from '../utils/getQuestions';
 import Header from '../components/Header';
-import { scoreSum, timerOutFalse, timerOutTrue } from '../redux/actions';
+import { scoreSum, timerOutFalse, timerOutTrue, timeMore30 } from '../redux/actions';
 import Timer from '../components/Timer';
 
 class Game extends React.Component {
@@ -12,7 +12,7 @@ class Game extends React.Component {
     actualQuestion: 0,
     isLoading: true,
     allAnswers: [],
-    timeResponse: 30,
+    // timeResponse: 30, // comentei porque estou chamando 'Timer' sem enviar props.
     // correctAnswer: '',
     // correctAnswerIndex: 0,
   };
@@ -51,6 +51,7 @@ class Game extends React.Component {
 
   randomizeQuestions = () => {
     const { allQuestions, actualQuestion } = this.state;
+    console.log(actualQuestion);
     let wrongAnswers = allQuestions[actualQuestion].incorrect_answers;
     const correctAnswer = allQuestions[actualQuestion].correct_answer;
 
@@ -109,19 +110,26 @@ class Game extends React.Component {
 
   nextQuestion = () => {
     const { actualQuestion } = this.state;
-    // const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
     const maxNumberQuestions = 4;
+    const TRINTA_SECONDS = 30;
     if (actualQuestion < maxNumberQuestions) {
-      this.setState((prev) => ({ actualQuestion: prev.actualQuestion + 1 }));
-      this.randomizeQuestions();
-      this.setState({ timeResponse: 5 }); // Pq não passar 30 segundos para o 'time' do global?
-      // dispatch(timerOutFalse());
+      this.setState(
+        (prev) => ({ actualQuestion: prev.actualQuestion + 1 }),
+        () => this.randomizeQuestions(),
+      ); // Nossas questões estavam com delay de uma porque o estado não estava atualizando antes de chamar a função.
+
+      // this.setState({ timeResponse: 5 }); // Pq não passar 30 segundos para o 'time' do global? DONE
+      dispatch(timerOutFalse());
+      dispatch(timeMore30(TRINTA_SECONDS));
+    } else {
+      history.push('/feedback');
     }
   };
 
   render() {
     const {
-      isLoading, allQuestions, actualQuestion, allAnswers, timeResponse } = this.state;
+      isLoading, allQuestions, actualQuestion, allAnswers } = this.state;
     const { history, timerOut } = this.props;
     if (isLoading) {
       return (
@@ -130,17 +138,18 @@ class Game extends React.Component {
         </div>
       );
     }
-    return (
+    // Tive que retirar o texto "Pergunta:" de dentro do h2 da pergunta porque não passava no teste.
+    return ( // Não estou enviando mais 30 segundos para o timer, to pegando isso do global.
       <div>
         <Header history={ history } />
-        <Timer time={ timeResponse } />
+        <Timer time />
         <h2 data-testid="question-category">
           {`Categoria: ${allQuestions[actualQuestion].category}`}
 
         </h2>
+        <span>Pergunta:</span>
         <h2 data-testid="question-text">
-          {`Pergunta: 
-          ${allQuestions[actualQuestion].question}`}
+          {allQuestions[actualQuestion].question}
         </h2>
         <div data-testid="answer-options">
           {allAnswers.map((answerOBJ, index) => (
