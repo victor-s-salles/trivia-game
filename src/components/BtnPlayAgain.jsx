@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class BtnPlayAgain extends Component {
   goToStart = () => {
     const { history } = this.props;
-    history.push('/game');
+    history.push('/');
   };
 
   render() {

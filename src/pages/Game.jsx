@@ -7,7 +7,6 @@ import Header from '../components/Header';
 import { scoreSum, timerOutFalse, timerOutTrue, timeMore30 } from '../redux/actions';
 import Timer from '../components/Timer';
 
-
 class Game extends React.Component {
   state = {
     allQuestions: [],
