@@ -1,26 +1,28 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import BtnPlayAgain from '../components/BtnPlayAgain';
 
 class Feedback extends React.Component {
   render() {
-    const { assertions, score } = this.props;
+    const { assertions, score, history } = this.props;
     const THREE = 3;
     if (assertions < THREE) {
       return (
         <div>
           <h2 data-testid="feedback-text">Could be better...</h2>
-          <p data-testid="feedback-total-question">
+          <p>
             Você acertou
-            <span>{` ${assertions}`}</span>
+            <span data-testid="feedback-total-question">{` ${assertions}`}</span>
             {assertions.length === 1 ? ' questão!' : ' questões!'}
           </p>
 
-          <p data-testid="feedback-total-score">
+          <p>
             Um total de
-            <span>{` ${score}`}</span>
+            <span data-testid="feedback-total-score">{` ${score}`}</span>
             {score.length === 1 ? ' ponto!' : ' pontos!'}
           </p>
+          <BtnPlayAgain history={ history } />
         </div>
       );
     }
@@ -29,17 +31,18 @@ class Feedback extends React.Component {
       return (
         <div>
           <h2 data-testid="feedback-text">Well Done!</h2>
-          <p data-testid="feedback-total-question">
+          <p>
             Você acertou
-            <span>{` ${assertions}`}</span>
+            <span data-testid="feedback-total-question">{` ${assertions}`}</span>
             {assertions.length === 1 ? ' questão!' : ' questões!'}
           </p>
 
-          <p data-testid="feedback-total-score">
+          <p>
             Um total de
-            <span>{` ${score}`}</span>
+            <span data-testid="feedback-total-score">{` ${score}`}</span>
             {score.length > 1 ? ' pontos!' : ' ponto!'}
           </p>
+          <BtnPlayAgain history={ history } />
         </div>
       );
     }
@@ -49,11 +52,14 @@ class Feedback extends React.Component {
 Feedback.propTypes = {
   score: PropTypes.number,
   assertions: PropTypes.number,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  assertions: state.playerReducer.assertions,
-  score: state.playerReducer.score,
+  assertions: state.player.assertions,
+  score: state.player.score,
 });
 
 Feedback.defaultProps = {
