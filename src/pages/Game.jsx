@@ -3,8 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import requestQuestions from '../utils/getQuestions';
 import Header from '../components/Header';
+// import Loading from '../components/Loading';
 import { scoreSum, timerOutFalse, timerOutTrue, timeMore30 } from '../redux/actions';
 import Timer from '../components/Timer';
+
 
 class Game extends React.Component {
   state = {
