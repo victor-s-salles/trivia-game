@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import BtnPlayAgain from '../components/BtnPlayAgain';
+import BtnRanking from '../components/BtnRanking';
 
 class Feedback extends React.Component {
   render() {
@@ -23,6 +24,7 @@ class Feedback extends React.Component {
             {score.length === 1 ? ' ponto!' : ' pontos!'}
           </p>
           <BtnPlayAgain history={ history } />
+          <BtnRanking history={ history } />
         </div>
       );
     }
@@ -43,6 +45,7 @@ class Feedback extends React.Component {
             {score.length > 1 ? ' pontos!' : ' ponto!'}
           </p>
           <BtnPlayAgain history={ history } />
+          <BtnRanking history={ history } />
         </div>
       );
     }

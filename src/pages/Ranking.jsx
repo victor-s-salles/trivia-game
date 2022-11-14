@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import BtnGoHome from '../components/BtnGoHome';
 
 class Ranking extends Component {
   constructor() {
@@ -29,11 +30,11 @@ class Ranking extends Component {
 
   render() {
     const { index } = this.state;
-    const { name, score, image } = this.props;
+    const { name, score, image, history } = this.props;
     return (
       <div className="ranking-conteiner">
 
-        <h1>Ranking</h1>
+        <h1 data-testid="ranking-title">Ranking</h1>
 
         <div className="ranking-content">
 
@@ -48,6 +49,7 @@ class Ranking extends Component {
               <p data-testid={ `player-score-${index}` }>{ score }</p>
             </div>
           </div>
+          <BtnGoHome history={ history } />
 
         </div>
       </div>
@@ -59,6 +61,9 @@ Ranking.propTypes = {
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 const mapStateToProps = ({ player: { name, score, image } }) => ({
