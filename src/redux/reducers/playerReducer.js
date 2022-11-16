@@ -1,4 +1,4 @@
-import { CREATE_USER, SAVE_IMAGE, SCORE_SUM } from '../actions';
+import { CREATE_USER, SAVE_IMAGE, SCORE_SUM, PLAYER_RESET } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -23,6 +23,14 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     ...state,
     score: state.score + action.score,
     assertions: state.assertions + 1,
+  };
+  case PLAYER_RESET: return {
+    ...state,
+    name: '',
+    assertions: 0,
+    score: 0,
+    gravatarEmail: '',
+    image: '',
   };
   default:
     return state;

@@ -6,6 +6,29 @@ import BtnRanking from '../components/BtnRanking';
 import FeedbackHeader from '../components/FeedbackHeader';
 
 class Feedback extends React.Component {
+  componentDidMount() {
+    this.createRanking();
+  }
+
+  createRanking() {
+    const { name, score, image, assertions } = this.props;
+    const playerRank = {
+      name,
+      score,
+      image,
+      assertions,
+    };
+    const actualPlayers = localStorage.getItem('ranking');
+    if (actualPlayers) {
+      const ranking = JSON.parse(localStorage.getItem('ranking'));
+      ranking.push(playerRank);
+      localStorage.setItem('ranking', JSON.stringify(ranking));
+    } else {
+      const player = [playerRank];
+      localStorage.setItem('ranking', JSON.stringify(player));
+    }
+  }
+
   render() {
     const { assertions, score, history } = this.props;
     const THREE = 3;
@@ -58,6 +81,8 @@ class Feedback extends React.Component {
 Feedback.propTypes = {
   score: PropTypes.number,
   assertions: PropTypes.number,
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
@@ -66,6 +91,8 @@ Feedback.propTypes = {
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
   score: state.player.score,
+  name: state.player.name,
+  image: state.player.image,
 });
 
 Feedback.defaultProps = {

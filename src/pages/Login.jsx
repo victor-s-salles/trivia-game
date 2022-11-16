@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import '../App.css';
 import BtnSettings from '../components/BtnSettings';
 
-import { createUser } from '../redux/actions';
+import { createUser, playerReset } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -14,6 +14,11 @@ class Login extends React.Component {
       email: '',
       isDisabled: true,
     };
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(playerReset());
   }
 
   onInputChange = ({ target: { value, name } }) => {

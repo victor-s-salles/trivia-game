@@ -8,47 +8,42 @@ class Ranking extends Component {
     super();
 
     this.state = {
-      index: 0,
+      ranking: [],
     };
   }
 
   componentDidMount() {
-    this.createRanking();
+    this.recoverRanking();
   }
 
-  createRanking() {
-    const { name, score, image } = this.props;
-    const picture = image;
-    const playerRank = [
-      name,
-      score,
-      picture,
-    ];
-    console.log(playerRank);
-    localStorage.setItem('ranking', playerRank);
+  recoverRanking() {
+    const rankingArray = JSON.parse(localStorage.getItem('ranking'));
+    const ranking = rankingArray.sort((a, b) => b.score - a.score);
+    this.setState({ ranking });
   }
 
   render() {
-    const { index } = this.state;
-    const { name, score, image, history } = this.props;
+    const { ranking } = this.state;
+    const { history } = this.props;
     return (
       <div className="ranking-conteiner">
 
         <h1 data-testid="ranking-title">Ranking</h1>
-
-        <div className="ranking-content">
-
-          <div className="user-rank">
+        {ranking.map((player, index) => (
+          <div key={ `${player.user}-${index}` } className="user-rank">
             <div>
-              <img src={ image } alt="user-pic" />
-              <p data-testid={ `player-name-${index}` }>{ name }</p>
+              <img src={ player.image } alt="user-pic" />
+              <p data-testid={ `player-name-${index}` }>{ player.name }</p>
             </div>
 
             <div className="user-score">
               <img src="" alt="star-rank" />
-              <p data-testid={ `player-score-${index}` }>{ score }</p>
+              <p data-testid={ `player-score-${index}` }>{ player.score }</p>
             </div>
           </div>
+        ))}
+        <div className="ranking-content">
+
           <BtnGoHome history={ history } />
 
         </div>
@@ -58,9 +53,6 @@ class Ranking extends Component {
 }
 
 Ranking.propTypes = {
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
