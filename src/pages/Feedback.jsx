@@ -40,13 +40,13 @@ class Feedback extends React.Component {
           <p>
             Você acertou
             <span data-testid="feedback-total-question">{` ${assertions}`}</span>
-            {assertions.length === 1 ? ' questão!' : ' questões!'}
+            <span>{assertions === 1 ? ' questão!' : ' questões!'}</span>
           </p>
 
           <p>
             Um total de
             <span data-testid="feedback-total-score">{` ${score}`}</span>
-            {score.length === 1 ? ' ponto!' : ' pontos!'}
+            <span>{score > 1 ? ' pontos!' : ' ponto!'}</span>
           </p>
           <BtnPlayAgain history={ history } />
           <BtnRanking history={ history } />
@@ -62,13 +62,13 @@ class Feedback extends React.Component {
           <p>
             Você acertou
             <span data-testid="feedback-total-question">{` ${assertions}`}</span>
-            {assertions.length === 1 ? ' questão!' : ' questões!'}
+            <span>{assertions === 1 ? ' questão!' : ' questões!'}</span>
           </p>
 
           <p>
             Um total de
             <span data-testid="feedback-total-score">{` ${score}`}</span>
-            {score.length > 1 ? ' pontos!' : ' ponto!'}
+            <span>{score > 1 ? ' pontos!' : ' ponto!'}</span>
           </p>
           <BtnPlayAgain history={ history } />
           <BtnRanking history={ history } />
