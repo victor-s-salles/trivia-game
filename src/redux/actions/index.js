@@ -5,6 +5,7 @@ export const TIMER_OUT_FALSE = 'TIMER_OUT_FALSE';
 export const TIMER_UPDATE = 'TIMER_UPDATE';
 export const SCORE_SUM = 'SCORE_SUM';
 export const TIME_MORE_30 = 'TIME_MORE_30';
+export const PLAYER_RESET = 'PLAYER_RESET';
 export const createUser = (payload) => ({
   type: CREATE_USER,
   payload,
@@ -31,4 +32,7 @@ export const scoreSum = (score) => ({
 export const timeMore30 = (time) => ({
   type: TIME_MORE_30,
   time,
+});
+export const playerReset = () => ({
+  type: PLAYER_RESET,
 });
