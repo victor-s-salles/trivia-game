@@ -6,6 +6,7 @@ import Header from '../components/Header';
 // import Loading from '../components/Loading';
 import { scoreSum, timerOutFalse, timerOutTrue, timeMore30 } from '../redux/actions';
 import Timer from '../components/Timer';
+import '../Css/Game.css';
 
 class Game extends React.Component {
   state = {
@@ -13,6 +14,7 @@ class Game extends React.Component {
     actualQuestion: 0,
     isLoading: true,
     allAnswers: [],
+    color: null,
     // timeResponse: 30, // comentei porque estou chamando 'Timer' sem enviar props.
     // correctAnswer: '',
     // correctAnswerIndex: 0,
@@ -52,7 +54,7 @@ class Game extends React.Component {
 
   randomizeQuestions = () => {
     const { allQuestions, actualQuestion } = this.state;
-    console.log(actualQuestion);
+    // console.log(actualQuestion);
     let wrongAnswers = allQuestions[actualQuestion].incorrect_answers;
     const correctAnswer = allQuestions[actualQuestion].correct_answer;
 
@@ -76,11 +78,13 @@ class Game extends React.Component {
     });
   };
 
-  checkAnswer = (answer) => {
+  checkAnswer = ({ target }) => {
     const { dispatch } = this.props;
+    const { name } = target;
+    const { allQuestions, actualQuestion } = this.state;
     dispatch(timerOutTrue());
-    if (answer === true) {
-      const { allQuestions, actualQuestion } = this.state;
+    if (name === allQuestions[actualQuestion].correct_answer) {
+      // const { allQuestions, actualQuestion } = this.state;
       const { difficulty } = allQuestions[actualQuestion];
       const { time } = this.props;
       const baseScore = 10;
@@ -106,7 +110,7 @@ class Game extends React.Component {
         break;
       }
     }
-    console.log(answer);
+    this.setState({ color: true });
   };
 
   nextQuestion = () => {
@@ -126,11 +130,12 @@ class Game extends React.Component {
     } else {
       history.push('/feedback');
     }
+    this.setState({ color: false });
   };
 
   render() {
     const {
-      isLoading, allQuestions, actualQuestion, allAnswers } = this.state;
+      isLoading, allQuestions, actualQuestion, allAnswers, color } = this.state;
     const { history, timerOut } = this.props;
     if (isLoading) {
       return (
@@ -143,7 +148,7 @@ class Game extends React.Component {
     return ( // Não estou enviando mais 30 segundos para o timer, to pegando isso do global.
       <div>
         <Header history={ history } />
-        <Timer time />
+        <Timer />
         <h2 data-testid="question-category">
           {`Categoria: ${allQuestions[actualQuestion].category}`}
 
@@ -160,10 +165,12 @@ class Game extends React.Component {
                 answerOBJ.correct ? 'correct-answer' : `wrong-answer-${index}`
               }
               type="button"
+              name={ answerOBJ.question }
+              className={
+                color && (answerOBJ.correct ? 'correctQuestion' : 'wrongQuestion')
+              }
               disabled={ timerOut }
-              onClick={ () => {
-                this.checkAnswer(answerOBJ.correct);
-              } }
+              onClick={ this.checkAnswer }
             >
               {answerOBJ.question}
             </button>
