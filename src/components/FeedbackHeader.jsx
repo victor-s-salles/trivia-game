@@ -32,7 +32,6 @@ class FeedbackHeader extends React.Component {
         <h4 data-testid="header-score">
           {score}
         </h4>
-        <BtnGoHome history={ history } />
       </div>
     );
   }
