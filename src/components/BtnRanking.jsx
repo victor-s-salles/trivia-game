@@ -14,7 +14,7 @@ class BtnRanking extends Component {
         data-testid="btn-ranking"
         onClick={ this.goToRanking }
       >
-        Ver e Salvar Ranking
+        Ranking
       </button>
     );
   }
