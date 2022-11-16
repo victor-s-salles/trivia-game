@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import BtnGoHome from './BtnGoHome';
 import gravatar from '../utils/gravatar';
 import { saveImage } from '../redux/actions';
 
@@ -17,7 +16,7 @@ class FeedbackHeader extends React.Component {
   };
 
   render() {
-    const { name, score, image, history } = this.props;
+    const { name, score, image } = this.props;
     return (
       <div>
         <img
