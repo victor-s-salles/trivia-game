@@ -1,49 +1,52 @@
+
+import mockFetch from './helpers/mockData'
+import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
+import App from '../App';
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
 
-import App from '../App'
-import renderWithRouterAndRedux from "./helpers/renderWithRouterAndRedux";
+  describe('Testando a pagina do game', ()=>{
 
-const playerStore = {
-    score: 300,
-    assertions: 5,
-    gravatarEmail: 'victor.s.salles@hotmail.com',
-    name: 'Victor',
-  };
+  beforeEach(() => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(mockFetch),
+    }));
+  });
+  afterEach(() => {
+    global.fetch.mockClear();
+  });
 
-  describe('Teste da pagina Game', ()=>{
-    afterEach(()=>jest.resetAllMocks())
+  it('Testa o funcionamento e pontuação das questoes a partir da tela de login', async () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+    const inputEmail = screen.getByTestId('input-gravatar-email');
+    userEvent.type(inputEmail, 'victor.s.salles@hotmail.com');
 
-    test('se a pagina retorna para o login, caso o token seja invalido', async ()=>{
-        const token = '12345678'
-        jest.spyOn(global,'fetch')
+    const inputName = screen.getByTestId('input-player-name');
+    userEvent.type(inputName, 'Victor');
 
-        act(()=>{ 
-          global.fetch.mockResolvedValueOnce({
-          json: jest.fn().mockResolvedValue(token),
-        }) })
+    const btnPlay = screen.getByTestId('btn-play');
+    userEvent.click(btnPlay);
 
-    
-        const {history} = renderWithRouterAndRedux(<App/>)
-        const name = screen.getByLabelText(/Nome/i)
-        const email = screen.getByLabelText(/Email/i)
-        expect(name).toBeInTheDocument()
-        expect(email).toBeInTheDocument()
-        userEvent.type(name, 'Victor')
-        userEvent.type(email, 'victor.s.salles@hotmail.com')
-
-        const btn = screen.getByRole('button', {name: 'Play'})
-        expect(btn).toBeInTheDocument()
-
-        userEvent.click(btn)
-        const {pathname} = history.location
+    await waitFor(() => expect(history.location.pathname).toBe('/game'));
+    const score = await screen.findByTestId('header-score');
 
 
-        await waitFor(() => {
-        
-            expect(pathname).toBe('/')
-          })
-    })
+    const answerCorrect1 = await screen.findByTestId('correct-answer');
+    userEvent.click(answerCorrect1);
+    const btnNext = await screen.findByTestId('btn-next');
+    expect(score.innerHTML).toBe('70');
+    userEvent.click(btnNext);
+
+    const answerCorrect2 = await screen.findByTestId('correct-answer');
+    userEvent.click(answerCorrect2)
+    expect(score.innerHTML).toBe('170');
+
+    const btnGoHome = screen.getByTestId('btn-go-home')
+    userEvent.click(btnGoHome)
+    await waitFor(() => expect(history.location.pathname).toBe('/'));
+  });
+
+
+
 
   })
