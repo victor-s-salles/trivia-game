@@ -56,9 +56,11 @@ class Timer extends React.Component {
     const { secondsLeft } = this.state;
     return (
       <div>
-        Timer:
-        {' '}
-        {secondsLeft}
+        <span>
+          Timer:
+          {' '}
+          {secondsLeft}
+        </span>
       </div>
     );
   }
