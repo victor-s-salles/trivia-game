@@ -107,6 +107,7 @@ class Game extends React.Component {
         break;
 
       default:
+        // console.log('Dificuldade errada');
         break;
       }
     }

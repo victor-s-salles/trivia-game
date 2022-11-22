@@ -62,4 +62,13 @@ describe ('Testes da tela de Feedback', ()=> {
         const score = screen.getByText('ponto!')
         expect(score).toBeInTheDocument()
     })
+    test('se aparece a mensagem WellDone! caso o assertion for maior que 3',()=>{
+        const {history, store } = renderWithRouterAndRedux(<App/>, {player: {score: 4, assertions: 80, gravatarEmail: 'victor.s.salles@hotmail.com', name: 'Victor'}}, '/feedback');
+
+        const globalState = store.getState();
+        const { player: { assertions } } = globalState;
+        expect(assertions).toBeGreaterThanOrEqual(3);
+        const message = screen.getByRole('heading', {level: 2, name: 'Well Done!'});
+        expect(message).toBeInTheDocument();
+    })
 })
