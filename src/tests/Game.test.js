@@ -1,7 +1,9 @@
 
 import mockFetch from './helpers/mockData'
+import mockFetchHack from './helpers/mockDataHack';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App';
+import Game from '../pages/Game';
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -46,7 +48,42 @@ import userEvent from "@testing-library/user-event";
     await waitFor(() => expect(history.location.pathname).toBe('/'));
   });
 
+  it('Testa a dificuldade default', async () => {
+    const INITIAL_STATE = {
+      timerOut: false,
+      time: 30,
+    };
 
+    global.fetch = jest.fn().mockResolvedValue(Promise.resolve({ json: () => Promise.resolve(mockFetchHack), ok: true}))
+    const { store } = renderWithRouterAndRedux(<Game />, INITIAL_STATE, '/game');
+    
+    function timeout(delay: number) {
+      return new Promise( res => setTimeout(res, delay) );
+    } await timeout(1000);
+    const btnCorrect = screen.getByTestId(/correct-answer/);
+    userEvent.click(btnCorrect);
 
+    const globalState = store.getState();
+    const { player: { score } } = globalState;
+    expect(score).toBe(0);
 
+  });
+
+  test('se no tipo boolean só tem uma alternativa incorreta', async () => {
+    const INITIAL_STATE = {
+      timerOut: false,
+      time: 30,
+    };
+
+    global.fetch = jest.fn().mockResolvedValue(Promise.resolve({ json: () => Promise.resolve(mockFetchHack), ok: true}))
+    const { store } = renderWithRouterAndRedux(<Game />, INITIAL_STATE, '/game');
+
+    function timeout(delay: number) {
+      return new Promise( res => setTimeout(res, delay) );
+    } await timeout(1000);
+
+    const btnFalse = screen.getByRole('button', { name: 'False' });
+    expect(btnFalse).toBeInTheDocument();
   })
+
+})
