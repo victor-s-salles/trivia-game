@@ -13,8 +13,8 @@ class Feedback extends React.Component {
   createRanking() {
     const { name, score, image, assertions } = this.props;
     const playerRank = {
-      name,
       score,
+      name,
       image,
       assertions,
     };
